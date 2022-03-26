@@ -7,7 +7,7 @@
     alarm: -1,
     dataRow1: "Battery",
     dataRow2: "Steps",
-    dataRow3: "Temp",
+    dataRow3: "Kw",
     speed: "kph",
     fullscreen: false,
   };
@@ -20,7 +20,7 @@
     storage.write(SETTINGS_FILE, settings)
   }
 
-  var dataOptions = ["Steps", "Battery", "VREF", "HRM", "Temp", "Humidity", "Wind", "Altitude", "CoreT"];
+  var dataOptions = ["Steps", "Battery", "VREF", "HRM", "KW", "Temp", "Humidity", "Wind", "Altitude", "CoreT"];
   var speedOptions = ["kph", "mph"];
 
   E.showMenu({
