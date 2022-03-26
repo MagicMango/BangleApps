@@ -51,8 +51,8 @@
       <li class="tab-item" id="tab-myappscontainer">
         <a href="javascript:showTab('myappscontainer')">My Apps</a>
       </li>
-      <li class="tab-item" id="tab-aboutcontainer">
-        <a href="javascript:showTab('aboutcontainer')">About</a>
+      <li class="tab-item" id="tab-morecontainer">
+        <a href="javascript:showTab('morecontainer')">More...</a>
       </li>
     </ul>
 
@@ -111,7 +111,7 @@
       </div>
     </div>
 
-    <div class="container apploader-tab" id="aboutcontainer" style="display:none">
+    <div class="container apploader-tab" id="morecontainer" style="display:none">
       <div class="hero bg-gray">
         <div class="hero-body">
           <a href="https://banglejs.com" target="_blank"><img src="img/banglejs-logo-mid.png" alt="Bangle.js"></a>
@@ -131,6 +131,8 @@
            <button class="btn" id="removeall">Remove all Apps</button>
            <button class="btn" id="installdefault">Install default apps</button>
            <button class="btn" id="installfavourite">Install favourite apps</button></p>
+        <p><button class="btn tooltip tooltip-right" id="downloadallapps" data-tooltip="Download all Bangle.js files to a ZIP file">Backup</button>
+           <button class="btn tooltip tooltip-right" id="uploadallapps" data-tooltip="Restore Bangle.js from a ZIP file">Restore</button></p>
         <h3>Settings</h3>
         <div class="form-group">
           <label class="form-switch">
@@ -141,7 +143,16 @@
             <input type="checkbox" id="settings-settime">
             <i class="form-icon"></i> Always update time when we connect
           </label>
+          <div class="form-group">
+            <select class="form-select form-inline"  id="settings-lang" style="width: 10em">
+              <option value="">None (English)</option>
+            </select>&nbsp;&nbsp;<span>Translations (<a href="https://github.com/espruino/BangleApps/issues/1311" target="_blank">BETA - more info</a>). Any apps that are uploaded to Bangle.js after changing this will have any text automatically translated.</span>
+          </div>
           <button class="btn" id="defaultsettings">Default settings</button>
+        </div>
+        <div id="more-deviceinfo" style="display:none">
+        <h3>Device info</h3>
+        <div id="more-deviceinfo-content"></div>
         </div>
       </div>
     </div>
@@ -161,10 +172,13 @@
     <script src="core/lib/heatshrink.js"></script>
     <script src="core/js/utils.js"></script>
     <script src="loader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script> <!-- for backup.js -->
+    <script src="backup.js"></script>
     <script src="core/js/ui.js"></script>
     <script src="core/js/comms.js"></script>
     <script src="core/js/appinfo.js"></script>
     <script src="core/js/index.js"></script>
     <script src="core/js/pwa.js" defer></script>
+    <script src="gadgetbridge.js"></script>    
   </body>
 </html>
