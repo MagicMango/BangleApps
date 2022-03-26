@@ -5,7 +5,7 @@ let settings = {
   alarm: -1,
   dataRow1: "Steps",
   dataRow2: "Temp",
-  dataRow3: "Battery",
+  dataRow3: "Kw",
   speed: "kph",
   fullscreen: false,
 };
@@ -187,6 +187,10 @@ function _drawData(key, y, c){
   } else if(key == "HRM"){
     value = Math.round(Bangle.getHealthStatus("day").bpm);
 
+  } else if (key == "KW"){
+    text = "KW";
+    value = getKW();
+    
   } else if (key == "TEMP"){
     var weather = getWeather();
     value = weather.temp;
@@ -520,6 +524,13 @@ function getSteps() {
   return 0;
 }
 
+function getKW() {
+	var date = new Date();
+    var currentThursday = new Date(date.getTime() +(3-((date.getDay()+6) % 7)) * 86400000);
+    var yearOfThursday = currentThursday.getFullYear();
+    var firstThursday = new Date(new Date(yearOfThursday,0,4).getTime() +(3-((new Date(yearOfThursday,0,4).getDay()+6) % 7)) * 86400000);
+    return Math.floor(1 + 0.5 + (currentThursday.getTime() - firstThursday.getTime()) / 86400000/7);
+}
 
 function getWeather(){
   var weatherJson;
