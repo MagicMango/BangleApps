@@ -10,6 +10,7 @@ let settings = {
   speed: "kph",
   fullscreen: false,
 };
+
 let saved_settings = storage.readJSON(SETTINGS_FILE, 1) || settings;
 for (const key in saved_settings) {
   settings[key] = saved_settings[key]
