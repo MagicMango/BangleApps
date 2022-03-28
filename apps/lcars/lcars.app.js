@@ -11,6 +11,8 @@ let settings = {
   fullscreen: false,
 };
 
+let hrmValue = 0;
+
 let saved_settings = storage.readJSON(SETTINGS_FILE, 1) || settings;
 for (const key in saved_settings) {
   settings[key] = saved_settings[key]
@@ -175,42 +177,52 @@ function _drawData(key, y, c){
   var value = "ERR";
   var should_print= true;
 
-  if(key == "STEPS"){
+
+  switch(key) {
+
+    case "STEPS":
     text = "STEP";
     value = getSteps();
+    break;
 
-  } else if(key == "BATTERY"){
+    case "BATTERY":
     text = "BAT";
     value = E.getBattery() + "%";
+    break;
 
-  } else if (key == "VREF"){
+    case "VREF":
     value = E.getAnalogVRef().toFixed(2) + "V";
+    break;
 
-  } else if(key == "HRM"){
-    value = Math.round(Bangle.getHealthStatus("current").bpm);
+    case "HRM":
+    value = hrmValue;
+    break;
 
-  } else if (key == "KW"){
+    case "KW":
     text = "KW";
     value = getKW();
-    
-  } else if (key == "TEMP"){
+    break;
+
+    case "TEMP":
     var weather = getWeather();
     value = weather.temp;
+    break;
 
-  } else if (key == "HUMIDITY"){
+    case "HUMIDITY":
     text = "HUM";
     var weather = getWeather();
     value = weather.hum;
+    break;
 
-  } else if (key == "WIND"){
+    case "WIND":
     text = "WND";
     var weather = getWeather();
     value = weather.wind;
+    break;
 
-  } else if (key == "ALTITUDE"){
+    case "ALTITUDE":
     should_print= false;
     text = "ALT";
-
     // Immediately print something - avoid that its empty
     printRow(text, "", y, c);
     Bangle.getPressure().then(function(data){
@@ -218,12 +230,14 @@ function _drawData(key, y, c){
         value = Math.round(data.altitude);
         printRow(text, value, y, c);
       }
-    })
+    });
+    break;
 
-  } else if(key == "CORET"){
+    case "CORET":
     value = locale.temp(parseInt(E.getTemperature()));
+    break;
   }
-
+  
   // Print for all datapoints that are not async
   if(should_print){
     printRow(text, value, y, c);
@@ -627,6 +641,13 @@ Bangle.on('lcdPower',on=>{
     if (drawTimeout) clearTimeout(drawTimeout);
     drawTimeout = undefined;
   }
+});
+
+/*
+ * HRM Listener
+ */
+Bangle.on('HRM', function (hrm) {
+  hrmValue = hrm.bpm;
 });
 
 Bangle.on('lock', function(isLocked) {
