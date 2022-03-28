@@ -1,6 +1,7 @@
 const SETTINGS_FILE = "lcars.setting.json";
 const locale = require('locale');
-const storage = require('Storage')
+const storage = require('Storage');
+
 let settings = {
   alarm: -1,
   dataRow1: "Steps",
