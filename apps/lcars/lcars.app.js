@@ -237,7 +237,7 @@ function _drawData(key, y, c){
     value = locale.temp(parseInt(E.getTemperature()));
     break;
   }
-  
+
   // Print for all datapoints that are not async
   if(should_print){
     printRow(text, value, y, c);
@@ -647,7 +647,9 @@ Bangle.on('lcdPower',on=>{
  * HRM Listener
  */
 Bangle.on('HRM', function (hrm) {
-  hrmValue = hrm.bpm;
+  if(hrm.confidence >= 75) {
+    hrmValue = hrm.bpm;
+  }
 });
 
 Bangle.on('lock', function(isLocked) {
