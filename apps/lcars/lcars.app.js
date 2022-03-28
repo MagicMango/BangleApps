@@ -185,7 +185,7 @@ function _drawData(key, y, c){
     value = E.getAnalogVRef().toFixed(2) + "V";
 
   } else if(key == "HRM"){
-    value = Math.round(Bangle.getHealthStatus("day").bpm);
+    value = Math.round(Bangle.getHealthStatus("current").bpm);
 
   } else if (key == "KW"){
     text = "KW";
